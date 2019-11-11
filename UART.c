@@ -66,3 +66,24 @@ void UART_put_char (uart_channel_t uart_channel, uint8_t character)
 	}
 
 }
+void UART_put_string(uart_channel_t uart_channel, int8_t* string)
+{
+	uint8_t contador = 0;
+	if (UART_0 == uart_channel) {
+		while (1)
+				{
+					if (string[contador] == '\0')
+					{
+						break;
+					}
+					UART_put_char(uart_channel, string[contador]);
+					contador++;
+				}
+		}
+		if (UART_1 == uart_channel) {}
+		if (UART_2 == uart_channel) {}
+		if (UART_3 == uart_channel) {}
+		if (UART_4 == uart_channel) {}
+
+}
+
