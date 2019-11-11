@@ -25,9 +25,9 @@ void UART_init(uart_channel_t uart_channel, uint32_t system_clk, uart_baud_rate_
 				UART0->C2  &= ~(UART_C2_TE_MASK);
 				UART0->C2  &= ~(UART_C2_RE_MASK);
 				UART0->BDH |= 0x00;
-				UART0->BDL  = 0x0B;
+				UART0->BDL  = 0x0B;//seleccion de baudrate con el uso de las tablas
 				UART0->C4  |= 0x0D;
-				UART0->C2  |= UART_C2_TE_MASK | UART_C2_RE_MASK;
+				UART0->C2  |= UART_C2_TE_MASK | UART_C2_RE_MASK;//encendido para transmitir y recibir
 	}
 	if (UART_1 == uart_channel) {}
 	if (UART_2 == uart_channel) {}
@@ -38,7 +38,7 @@ void UART_init(uart_channel_t uart_channel, uint32_t system_clk, uart_baud_rate_
 void UART_interrupt_enable(uart_channel_t uart_channel)
 {
 	if (UART_0 == uart_channel) {
-		UART0->C2 |= UART_C2_RIE_MASK;
+		UART0->C2 |= UART_C2_RIE_MASK;//habilitacion de interrupcion
 		}
 		if (UART_1 == uart_channel) {}
 		if (UART_2 == uart_channel) {}
@@ -49,7 +49,7 @@ void UART_interrupt_enable(uart_channel_t uart_channel)
 void UART_put_char (uart_channel_t uart_channel, uint8_t character)
 {
 	if (UART_0 == uart_channel) {
-		while (!(UART0->S1 & UART_S1_TC_MASK))
+		while (!(UART0->S1 & UART_S1_TC_MASK))//utilizamos el codigo bloqueante para que  termine de transmitir
 		{
 			// Codigo Bloqueante
 		}
@@ -72,7 +72,7 @@ void UART_put_string(uart_channel_t uart_channel, int8_t* string)
 	if (UART_0 == uart_channel) {
 		while (1)
 				{
-					if (string[contador] == '\0')
+					if (string[contador] == '\0')//enviado de caracter  con variable contador qque ayuda a movernos sobre el string
 					{
 						break;
 					}
